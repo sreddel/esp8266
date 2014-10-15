@@ -118,6 +118,8 @@ uint8 onewire_readbit(void)
 
 	esp8266_sleep(53);
 
+	GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),1);
+
 	return r;
 
 }
