@@ -21,7 +21,7 @@ sleep_tim1_intr_handler(void)
 }
 
 
-void sleep(int16_t time) 
+void esp8266_sleep(int16_t time) 
 {
 
 	ETS_FRC_TIMER1_INTR_ATTACH(sleep_tim1_intr_handler, NULL);
