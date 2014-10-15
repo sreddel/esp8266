@@ -57,7 +57,7 @@ uint8 onewire_reset(void)
 		esp8266_sleep(480);
 
 		GPIO_DIS_OUTPUT(GPIO_PIN_ADDR(onewire_pin));
-		esp8266_sleep(70);
+		esp8266_sleep(40);
 		r = !GPIO_INPUT_GET(GPIO_PIN_ADDR(onewire_pin));
 
 		ETS_UART_INTR_ENABLE();

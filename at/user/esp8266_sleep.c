@@ -10,7 +10,7 @@
      0)
 
 
-LOCAL uint8_t sleep_state = 0;
+LOCAL uint8 sleep_state = 0;
 
 LOCAL void
 sleep_tim1_intr_handler(void)
@@ -34,9 +34,7 @@ void esp8266_sleep(uint16_t time)
 
     RTC_REG_WRITE(FRC1_LOAD_ADDRESS, rtc_ticks);
 
-    while (sleep_state == 0)
-    {
-    }
+    while (sleep_state == 0);
 
     ETS_FRC1_INTR_DISABLE();
 
