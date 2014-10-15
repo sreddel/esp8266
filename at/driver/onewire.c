@@ -2,12 +2,7 @@
 #include "esp8266_sleep.h"
 #include "driver/onewire.h"
 
-#include "ets_sys.h"
-#include "os_type.h"
-#include "osapi.h"
-#include "mem.h"
 #include "gpio.h"
-#include "user_interface.h"
 
 LOCAL uint8_t onewire_pin;
 
