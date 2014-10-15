@@ -222,6 +222,19 @@ void onewire_resetsearch(void)
   	}
 }
 
+void onewire_targetsearch(uint8 family_code)
+{
+
+	uint8 i;
+
+	ROM_NO[0] = family_code;
+   	for (i = 1; i < 8; i++)
+      	ROM_NO[i] = 0;
+   	LastDiscrepancy = 64;
+   	LastFamilyDiscrepancy = 0;
+   	LastDeviceFlag = FALSE;
+}
+
 uint8 onewire_search(uint16 *newAddr)
 {
 
