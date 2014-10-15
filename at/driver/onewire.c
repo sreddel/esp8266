@@ -36,7 +36,7 @@ uint8 onewire_reset(void)
 
 		GPIO_DIS_OUTPUT(GPIO_PIN_ADDR(onewire_pin));
 
-		while (!GPIO_INPUT_GET(GPIO_PIN_ADDR(onewire_pin))
+		while (!GPIO_INPUT_GET(GPIO_PIN_ADDR(onewire_pin)))
 		{
 			if (--retries==0)
 			{
