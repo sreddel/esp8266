@@ -1,6 +1,6 @@
 // implement a sleep function
 
-#include "ets_sys.h"
+#include "esp8266_sleep.h"
 
 #define US_TO_RTC_TIMER_TICKS(t)          \
     ((t) ?                                   \
@@ -21,14 +21,14 @@ sleep_tim1_intr_handler(void)
 }
 
 
-void esp8266_sleep(int16_t time) 
+void esp8266_sleep(uint16_t time) 
 {
 
 	ETS_FRC_TIMER1_INTR_ATTACH(sleep_tim1_intr_handler, NULL);
     TM1_EDGE_INT_ENABLE();
     ETS_FRC1_INTR_ENABLE();
 
-    int16_t rtc_ticks = US_TO_RTC_TIMER_TICKS(time);
+    uint16_t rtc_ticks = US_TO_RTC_TIMER_TICKS(time);
 
     sleep_state = 0;
 

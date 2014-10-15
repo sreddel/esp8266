@@ -1,6 +1,8 @@
 #include "at_cmd.h"
 #include "user_interface.h"
 #include "osapi.h"
+#include "sys/unistd.h"
+#include "esp8266_sleep.h"
 //#include<stdlib.h>
 
 /** @defgroup AT_BASECMD_Functions
@@ -101,6 +103,7 @@ at_cmdProcess(uint8_t *pAtRcvData)
     {
       if(at_fun[cmdId].at_exeCmd)
       {
+        esp8266_sleep(10*1000);
         os_sprintf(tempStr, "%d %s\r\n", cmdId, "exeCmd");
         uart0_sendStr(tempStr);
         at_fun[cmdId].at_exeCmd(cmdId);
