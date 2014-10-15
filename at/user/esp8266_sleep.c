@@ -23,19 +23,19 @@ sleep_tim1_intr_handler(void)
 
 void esp8266_sleep(uint16_t time) 
 {
+  uint16_t rtc_ticks;
 
-	ETS_FRC_TIMER1_INTR_ATTACH(sleep_tim1_intr_handler, NULL);
-    TM1_EDGE_INT_ENABLE();
-    ETS_FRC1_INTR_ENABLE();
+  rtc_ticks = US_TO_RTC_TIMER_TICKS(time);
+  sleep_state = 0;
 
-    uint16_t rtc_ticks = US_TO_RTC_TIMER_TICKS(time);
+  ETS_FRC_TIMER1_INTR_ATTACH(sleep_tim1_intr_handler, NULL);
+  TM1_EDGE_INT_ENABLE();
+  ETS_FRC1_INTR_ENABLE();
 
-    sleep_state = 0;
+  RTC_REG_WRITE(FRC1_LOAD_ADDRESS, rtc_ticks);
 
-    RTC_REG_WRITE(FRC1_LOAD_ADDRESS, rtc_ticks);
+  while (sleep_state == 0);
 
-    while (sleep_state == 0);
-
-    ETS_FRC1_INTR_DISABLE();
+  ETS_FRC1_INTR_DISABLE();
 
 }
