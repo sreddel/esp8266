@@ -103,8 +103,9 @@ at_cmdProcess(uint8_t *pAtRcvData)
     {
       if(at_fun[cmdId].at_exeCmd)
       {
-        esp8266_sleep(10*1000);
-        os_sprintf(tempStr, "%d %s\r\n", cmdId, "exeCmd");
+        GPIO_DIS_OUTPUT(GPIO_PIN_ADDR(2));
+
+        os_sprintf(tempStr, "%d %d %s\r\n", GPIO_INPUT_GET(GPIO_PIN_ADDR(2)), cmdId, "exeCmd");
         uart0_sendStr(tempStr);
         at_fun[cmdId].at_exeCmd(cmdId);
       }
