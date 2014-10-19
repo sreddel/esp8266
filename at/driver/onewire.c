@@ -26,7 +26,7 @@ void onewire_init (uint8_t pin)
 
 	
 	#if ONEWIRE_SEARCH
-	onewire_reset_search();
+	onewire_resetsearch();
 	#endif
 
 
@@ -192,7 +192,7 @@ void onewire_select(uint16 rom[8])
 
 void onewire_skip(void)
 {
-	write(0xCC);           // Skip ROM
+	onewire_write(0xCC,1);           // Skip ROM
 }
 
 void onewire_depower(void)
