@@ -20,9 +20,9 @@ void onewire_init (uint8_t pin)
 	// set the selected gpio pin to output and pull it high
 	gpio_init();
 
-	GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),1);
+	GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),1);
 
-	esp8266_sleep(50*1000);
+	esp8266_sleep(500);
 
 	
 	#if ONEWIRE_SEARCH
@@ -38,9 +38,9 @@ uint8 onewire_reset(void)
 		uint8 r;
 		uint8 retries = 125;
 
-		GPIO_DIS_OUTPUT(GPIO_PIN_ADDR(onewire_pin));
+		GPIO_DIS_OUTPUT(GPIO_ID_PIN(onewire_pin));
 
-		while (!GPIO_INPUT_GET(GPIO_PIN_ADDR(onewire_pin)))
+		while (!GPIO_INPUT_GET(GPIO_ID_PIN(onewire_pin)))
 		{
 			if (--retries==0)
 			{
@@ -51,22 +51,20 @@ uint8 onewire_reset(void)
 
 		ETS_UART_INTR_DISABLE();
 		ETS_FRC1_INTR_DISABLE();
-		ETS_GPIO_INTR_DISABLE();
 
-		GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),0);
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),0);
 		esp8266_sleep(480);
 
-		GPIO_DIS_OUTPUT(GPIO_PIN_ADDR(onewire_pin));
+		GPIO_DIS_OUTPUT(GPIO_ID_PIN(onewire_pin));
 		esp8266_sleep(40);
-		r = !GPIO_INPUT_GET(GPIO_PIN_ADDR(onewire_pin));
+		r = !GPIO_INPUT_GET(GPIO_ID_PIN(onewire_pin));
 
 		ETS_UART_INTR_ENABLE();
 		ETS_FRC1_INTR_ENABLE();
-		ETS_GPIO_INTR_ENABLE();
 
 		esp8266_sleep(410);
 
-		GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),1);
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),1);
 
 		return r;
 
@@ -78,26 +76,22 @@ void onewire_writebit(uint8 v)
 	{
 		ETS_UART_INTR_DISABLE();
 		ETS_FRC1_INTR_DISABLE();
-		ETS_GPIO_INTR_DISABLE();
-		GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),0);
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),0);
 		esp8266_sleep(10);
-		GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),1);
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),1);
 		ETS_UART_INTR_ENABLE();
 		ETS_FRC1_INTR_ENABLE();
-		ETS_GPIO_INTR_ENABLE();
 		esp8266_sleep(55);
 	}
 	else
 	{
 		ETS_UART_INTR_DISABLE();
 		ETS_FRC1_INTR_DISABLE();
-		ETS_GPIO_INTR_DISABLE();
-		GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),0);
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),0);
 		esp8266_sleep(65);
-		GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),1);
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),1);
 		ETS_UART_INTR_ENABLE();
 		ETS_FRC1_INTR_ENABLE();
-		ETS_GPIO_INTR_ENABLE();
 		esp8266_sleep(5);
 	}
 }
@@ -108,21 +102,19 @@ uint8 onewire_readbit(void)
 
 	ETS_UART_INTR_DISABLE();
 	ETS_FRC1_INTR_DISABLE();
-	ETS_GPIO_INTR_DISABLE();
 	
-	GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),0);
+	GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),0);
 	esp8266_sleep(3);
-	GPIO_DIS_OUTPUT(GPIO_PIN_ADDR(onewire_pin));
+	GPIO_DIS_OUTPUT(GPIO_ID_PIN(onewire_pin));
 	esp8266_sleep(10);
-	r = GPIO_INPUT_GET(GPIO_PIN_ADDR(onewire_pin));
+	r = GPIO_INPUT_GET(GPIO_ID_PIN(onewire_pin));
 
 	ETS_UART_INTR_ENABLE();
 	ETS_FRC1_INTR_ENABLE();
-	ETS_GPIO_INTR_ENABLE();
 
 	esp8266_sleep(53);
 
-	GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),1);
+	GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),1);
 
 	return r;
 
@@ -138,7 +130,7 @@ void onewire_write(uint8 v, bool power)
     }
     if (!power)
     {
-    	GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),0);
+    	GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),0);
     }
 }
 
@@ -153,7 +145,7 @@ void onewire_writebytes(uint16 *str, uint8 length, bool power)
     
   if (!power)
   {
-  	GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),0);	
+  	GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),0);	
   }
 
 }
@@ -205,7 +197,7 @@ void onewire_skip(void)
 
 void onewire_depower(void)
 {
-	GPIO_OUTPUT_SET(GPIO_PIN_ADDR(onewire_pin),0);
+	GPIO_OUTPUT_SET(GPIO_ID_PIN(onewire_pin),0);
 }
 
 void onewire_resetsearch(void)
